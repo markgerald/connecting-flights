@@ -25,7 +25,6 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 		return nil
 	}
 
-	// Primeiro, lidamos com os voos diretos.
 	for _, day := range scheduleData.Days {
 		for _, flight := range day.Flights {
 			currentDate := time.Date(
@@ -53,7 +52,6 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 		}
 	}
 
-	// Agora, lidamos com voos com conexões.
 	for _, route := range allRoutes {
 		if route.AirportFrom == requestData.Departure && route.ConnectingAirport != "" {
 			connectingSchedule, err := fs.getConnectedFlightSchedule(route.AirportFrom, route.ConnectingAirport)
@@ -72,7 +70,6 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 					connArrivalTime := utils.StringToTime(connFlight.ArrivalTime, currentDate)
 
 					if connArrivalTime.Add(2 * time.Hour).Before(connDepartureTime) {
-						// Aqui é onde vamos incluir a parte de voo direto e a parte de conexão.
 						filteredFlight := models.Flight{
 							Number: connFlight.Number,
 							Stops:  1,
@@ -85,9 +82,9 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 								},
 								{
 									DepartureAirport:  route.ConnectingAirport,
-									ArrivalAirport:    requestData.Arrival,                                     // Fazendo a suposição de que é a chegada final.
-									DepartureDateTime: connArrivalTime.Add(2 * time.Hour).Format(time.RFC3339), // Supondo 2 horas de espera para o próximo voo.
-									ArrivalDateTime:   connArrivalTime.Add(3 * time.Hour).Format(time.RFC3339), // Supondo que o próximo voo leva 1 hora.
+									ArrivalAirport:    requestData.Arrival,
+									DepartureDateTime: connArrivalTime.Add(2 * time.Hour).Format(time.RFC3339),
+									ArrivalDateTime:   connArrivalTime.Add(3 * time.Hour).Format(time.RFC3339),
 								},
 							},
 						}
