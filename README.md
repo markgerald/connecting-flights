@@ -1,3 +1,3 @@
 # Connecting Flights
 
-Go serverless aplication runnit on AWS Lambda.
+Go serverless aplication running on AWS Lambda.
