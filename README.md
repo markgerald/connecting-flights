@@ -5,7 +5,7 @@ Go serverless aplication running on AWS Lambda.
 ##Testing the application:
 ```https://k7rt6og6p7.execute-api.us-east-1.amazonaws.com/dev/```
 
-Send a post to URL with this body:
+Send a post to URL with a body like this:
 ```
 {
   "departure": "DUB",
