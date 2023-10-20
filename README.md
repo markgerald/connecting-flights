@@ -2,7 +2,7 @@
 
 Go serverless aplication running on AWS Lambda.
 
-##Testing the application:
+## Testing the application:
 
 THe aplication is deployed on AWS Lambda and can be tested by sending a POST request to the following URL:
 https://k7rt6og6p7.execute-api.us-east-1.amazonaws.com/dev/
