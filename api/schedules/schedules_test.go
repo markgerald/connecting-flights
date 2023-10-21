@@ -11,6 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const routesUrl = "https://services-api.ryanair.com/views/locate/3/routes"
+const scheduleURL = "https://services-api.ryanair.com/timtbl/3/schedules/"
+
 func TestGetSchedule(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
