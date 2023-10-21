@@ -18,7 +18,7 @@ func TestGetSchedule(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	httpmock.RegisterResponder("GET", scheduleURL+"DUB/STN/years/2023/months/10",
+	httpmock.RegisterResponder("GET", scheduleURL+"DUB/WRO/years/2023/months/10",
 		httpmock.NewStringResponder(200, `{"month":10,"days":[{"day":1,"flights":[{"number":"FR123","departureTime":"12:00","arrivalTime":"14:00","stops":0,"legs":[]}]}]}`))
 	httpmock.RegisterResponder("GET", routesUrl,
 		httpmock.NewStringResponder(404, `{"error": "No flights found"}`))

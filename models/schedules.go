@@ -15,7 +15,7 @@ type Flight struct {
 	DepartureTime string `json:"departureTime,omitempty"`
 	ArrivalTime   string `json:"arrivalTime,omitempty"`
 	Stops         int    `json:"stops"`
-	Legs          []Leg  `json:"leg,omitempty"`
+	Legs          []Leg  `json:"legs,omitempty"`
 }
 
 type Leg struct {

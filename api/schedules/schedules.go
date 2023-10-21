@@ -24,6 +24,7 @@ func GetSchedule(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	flightService := services.FlightService{}
 	filteredFlights := flightService.FilterFlights(schedule, requestData, allRoutes)
 	if filteredFlights == nil {
