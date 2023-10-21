@@ -1,12 +1,9 @@
 package services
 
 import (
-	"encoding/json"
+	"github.com/markgerald/flyroutes/domain"
 	"github.com/markgerald/flyroutes/models"
 	"github.com/markgerald/flyroutes/utils"
-	"io"
-	"net/http"
-	"strconv"
 	"time"
 )
 
@@ -54,7 +51,7 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 
 	for _, route := range allRoutes {
 		if route.AirportFrom == requestData.Departure && route.ConnectingAirport != "" {
-			connectingSchedule, err := fs.getConnectedFlightSchedule(route.AirportFrom, route.ConnectingAirport)
+			connectingSchedule, err := domain.GetConnectedFlightSchedule(route.AirportFrom, route.ConnectingAirport)
 			if err != nil {
 				continue
 			}
@@ -96,31 +93,4 @@ func (fs *FlightService) FilterFlights(scheduleData models.Schedule, requestData
 	}
 
 	return filteredFlights
-}
-
-func (fs *FlightService) getConnectedFlightSchedule(departure, arrival string) (models.Schedule, error) {
-	year, month, _ := time.Now().Date()
-	url := "https://services-api.ryanair.com/timtbl/3/schedules/" +
-		departure + "/" +
-		arrival + "/years/" +
-		strconv.Itoa(year) + "/months/" + strconv.Itoa(int(month))
-
-	resp, err := http.Get(url)
-	if err != nil {
-		return models.Schedule{}, err
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return models.Schedule{}, err
-	}
-
-	var schedule models.Schedule
-	err = json.Unmarshal(body, &schedule)
-	if err != nil {
-		return models.Schedule{}, err
-	}
-
-	return schedule, nil
 }

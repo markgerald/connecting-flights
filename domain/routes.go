@@ -7,10 +7,10 @@ import (
 	"net/http"
 )
 
-const routesUrl = "https://services-api.ryanair.com/views/locate/3/routes"
+const RoutesUrl = "https://services-api.ryanair.com/views/locate/3/routes"
 
 func GetRoutesData() ([]models.Route, error) {
-	resp, err := http.Get(routesUrl)
+	resp, err := http.Get(RoutesUrl)
 	if err != nil {
 		return nil, err
 	}
